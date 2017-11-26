@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Country;
 use Illuminate\Http\Request;
 
 class addresses extends Controller
@@ -13,7 +14,8 @@ class addresses extends Controller
      */
     public function index()
     {
-        //
+        $all_countries = Country::all();
+        return view('add_country');
     }
 
     /**
@@ -23,7 +25,7 @@ class addresses extends Controller
      */
     public function create()
     {
-        //
+        return view('add_country');
     }
 
     /**
@@ -34,7 +36,7 @@ class addresses extends Controller
      */
     public function store(Request $request)
     {
-        //
+        echo $request;
     }
 
     /**
