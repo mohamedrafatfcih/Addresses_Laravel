@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TranslationCountry extends Model
 {
-    function country(){
+    public  function country(){
         return $this->belongsTo(Country::class);
     }
 }

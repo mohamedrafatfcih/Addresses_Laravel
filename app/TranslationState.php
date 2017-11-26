@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TranslationState extends Model
 {
-    function state(){
+    public function state(){
         return $this->belongsTo(State::class);
     }
 }

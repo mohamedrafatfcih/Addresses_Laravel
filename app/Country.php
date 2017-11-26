@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Country extends Model
 {
 
-    function states(){
+    public  function states(){
         return $this->hasMany(State::class);
     }
 
-    function translations(){
+    public function translations(){
         return $this->hasMany(TranslationCountry::class);
     }
 }
