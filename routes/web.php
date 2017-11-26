@@ -15,4 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('addresses', 'addresses');
+Route::resource('counteries','countriesController');
+Route::resource('states','statesController' );
+Route::resource('cities','citiesController' );
