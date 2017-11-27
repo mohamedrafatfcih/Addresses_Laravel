@@ -1,4 +1,3 @@
-
 <div class="panel-body">
     @if(\Session::has('success'))
         <div class="alert alert-success">
@@ -7,28 +6,21 @@
     @endif
 </div>
 
-<div class="panel-body">
-        @if(\Session::has('error'))
-                <div class="alert alert-danger">
-                        {{\Session::get('error')}}
-                </div>
-        @endif
-</div>
 
 
-{!! Form::open(['route' => 'counteries.store']) !!}
+{!! Form::open(['route' => ['counteries.update',$countryObj->id],'method'=>'put']) !!}
 
 {!!  Form::label('country_name', 'Country name :') !!}
-{!! Form::text('country_name') !!}
+{!! Form::text('country_name', $countryObj->country_name) !!}
 
 {!!  Form::label('country_main_language', 'Main Language :') !!}
-{!! Form::text('country_main_language') !!}
+{!! Form::text('country_main_language' , $countryObj->main_lang ) !!}
 
 {!!  Form::label('country_population', 'Country population :') !!}
-{!! Form::text('country_population') !!}
+{!! Form::text('country_population' , $countryObj->population ) !!}
 
 {!!  Form::label('country_area', 'Country Area :') !!}
-{!! Form::text('country_area') !!}
+{!! Form::text('country_area' , $countryObj->area) !!}
 
-{!!   Form::submit('Add') !!}
+{!!   Form::submit('Update') !!}
 {!! Form::close() !!}
