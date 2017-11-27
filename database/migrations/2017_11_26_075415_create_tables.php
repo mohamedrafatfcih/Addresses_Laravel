@@ -101,5 +101,8 @@ class CreateTables extends Migration
         Schema::dropIfExists('countries');
         Schema::dropIfExists('states');
         Schema::dropIfExists('cities');
+        Schema::dropIfExists('translations_countries');
+        Schema::dropIfExists('translations_states');
+        Schema::dropIfExists('translations_cities');
     }
 }

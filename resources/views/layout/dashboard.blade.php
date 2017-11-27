@@ -298,6 +298,7 @@
         </div>
         <div class="box-body">
           @yield('states')
+          @yield('add_state')
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

@@ -16,6 +16,6 @@ class State extends Model
     }
 
     public  function translation(){
-        return $this->hasMany(TranslationState::class);
+        return $this->hasMany(TranslationState::class,'source_id','id');
     }
 }

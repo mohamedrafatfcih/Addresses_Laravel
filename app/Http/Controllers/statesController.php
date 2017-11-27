@@ -41,6 +41,10 @@ class statesController extends Controller
     public function store(Request $request)
     {
         if($request->isMethod('post')){
+           $request->validate([
+               $request,
+               'state_name'=>'required|max:30|unique:states'
+           ]);
              $state = new State();
              $state->state_name = $request->input('state_name');
              $state->country_id = $request->input('country');
