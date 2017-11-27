@@ -31,7 +31,7 @@ class CreateTables extends Migration
             $table->increments('id');
             $table->string('state_name');
             $table->integer('country_id')->unsigned();
-            $table->foreign('country_id')->references('id')->on('countries');
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
 
@@ -40,7 +40,7 @@ class CreateTables extends Migration
             $table->increments('id');
             $table->string('city_name');
             $table->integer('state_id')->unsigned();
-            $table->foreign('state_id')->references('id')->on('states');
+            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
 
@@ -66,7 +66,7 @@ class CreateTables extends Migration
             $table->string('translated_to');
             $table->string('trans_lang');
             $table->integer('source_id')->unsigned();
-            $table->foreign('source_id')->references('id')->on('countries');
+            $table->foreign('source_id')->references('id')->on('countries')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
 
@@ -75,7 +75,7 @@ class CreateTables extends Migration
             $table->string('translated_to');
             $table->string('trans_lang');
             $table->integer('source_id')->unsigned();
-            $table->foreign('source_id')->references('id')->on('states');
+            $table->foreign('source_id')->references('id')->on('states')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
 
@@ -85,7 +85,7 @@ class CreateTables extends Migration
             $table->string('translated_to');
             $table->string('trans_lang');
             $table->integer('source_id')->unsigned();
-            $table->foreign('source_id')->references('id')->on('cities');
+            $table->foreign('source_id')->references('id')->on('cities')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
 

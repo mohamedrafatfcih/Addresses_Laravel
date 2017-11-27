@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Country;
+use App\State;
 use Illuminate\Http\Request;
 
 class statesController extends Controller
@@ -13,7 +15,9 @@ class statesController extends Controller
      */
     public function index()
     {
-        //
+        $states = State::all();
+        $arr = Array('states' => $states);
+        return view('state.states',$arr);
     }
 
     /**
@@ -23,7 +27,9 @@ class statesController extends Controller
      */
     public function create()
     {
-        //
+        $countries = Country::all();
+        $arr = Array('countries' => $countries);
+        return view('state.create_state', $arr);
     }
 
     /**
@@ -34,7 +40,13 @@ class statesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->isMethod('post')){
+             $state = new State();
+             $state->state_name = $request->input('state_name');
+             $state->country_id = $request->input('country');
+             $state->save();
+             return redirect(route('states.create'));
+        }
     }
 
     /**
@@ -45,7 +57,10 @@ class statesController extends Controller
      */
     public function show($id)
     {
-        //
+        $state = State::find($id);
+        $arr = Array('state' => $state);
+        return view('state.show_state', $arr);
+
     }
 
     /**
@@ -56,7 +71,11 @@ class statesController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $state = State::find($id);
+        $countries = Country::all();
+        $arr = Array('state' => $state, 'countries' => $countries);
+        return view('state.edit_state', $arr);
     }
 
     /**
@@ -68,7 +87,12 @@ class statesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+            $state = State::find($id);
+            $state->state_name =  $request->input('state_name');
+            $state->country_id =  $request->input('country');
+            $state->save();
+            return redirect(route('states.index'));
+
     }
 
     /**
@@ -79,6 +103,8 @@ class statesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $state = State::find($id);
+        $state->delete();
+        return redirect(route('states.index'));
     }
 }
