@@ -15,8 +15,6 @@
 
             <td>   {{$city->city_name}} </td>
 
-
-
     @endforeach
 
 
