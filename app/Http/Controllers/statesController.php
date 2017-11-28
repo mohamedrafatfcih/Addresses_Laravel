@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Country;
 use App\State;
+use App\TranslationState;
 use Illuminate\Http\Request;
 
 class statesController extends Controller
@@ -67,6 +68,48 @@ class statesController extends Controller
 
     }
 
+
+    public function add_trans(Request $request, $id){
+        $state = State::find($id);
+        if($request->isMethod('post')){
+            /*$request->validate([
+                $request,
+                ['translated_to' => 'requried|max:30|unique:translations_states',
+                    'trans_lang' => 'required']
+            ]);*/
+
+            $trans_state = new TranslationState();
+            $trans_state->translated_to = $request->input('translated_to');
+            $trans_state->trans_lang = $request->input('trans_lang');
+            $trans_state->source_id = $id;
+            $trans_state->save();
+
+        }
+        return view('state.add_trans_state',['state'=>$state]);
+
+    }
+
+
+    public function edit_state_trans(Request $request, $state_id , $id){
+        $trans_state = TranslationState::find($id);
+        $arr = Array('trans_state' => $trans_state);
+        if($request->isMethod('post')){
+            $trans_state->translated_to = $request->input('translated_to');
+            $trans_state->trans_lang = $request->input('trans_lang');
+            $trans_state->source_id = $state_id;
+            $trans_state->save();
+            return redirect(route('states.show',['state'=>$state_id]));
+
+        }else{
+            return view('state.edit_state_trans',$arr);
+        }
+
+    }
+    public function delete_trans_state($state_id, $id){
+        $trans_state = TranslationState::find($id);
+        $trans_state->delete();
+        return redirect(route('states.show',['state'=>$state_id]));
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -111,4 +154,5 @@ class statesController extends Controller
         $state->delete();
         return redirect(route('states.index'));
     }
+
 }

@@ -18,3 +18,11 @@ Route::get('/', function () {
 Route::resource('counteries','countriesController');
 Route::resource('states','statesController' );
 Route::resource('cities','citiesController' );
+Route::get('/states/trans/{id}','statesController@add_trans');
+Route::post('/states/trans/{id}','statesController@add_trans');
+Route::get('/states/{state_id}/trans/{id}/edit','statesController@edit_state_trans');
+Route::post('/states/{state_id}/trans/{id}/edit','statesController@edit_state_trans');
+Route::get('/states/{state_id}/trans/{id}/delete','statesController@delete_trans_state');
+
+
+

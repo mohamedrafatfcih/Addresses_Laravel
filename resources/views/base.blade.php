@@ -16,9 +16,10 @@
 </head>
 <body>
 
-<h3> this is parent </h3>
 <div class="container">
     @yield('content')
+    @yield('states')
+    @yield('add_state')
 </div>
 
 <script src="{{ asset('js/app.js') }}"></script>

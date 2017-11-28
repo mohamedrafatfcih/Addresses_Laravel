@@ -1,33 +1,43 @@
-@extends('layout.dashboard')
-
-
+@extends('base')
 @section('states')
 
 <h1> All Sates</h1>
-
+<table class="table-bordered text-center hover">
+    <tr>
+        <td>State Name </td>
+        <td>cities</td>
+    </tr>
 @foreach($states as $state)
-{{$state->state_name}}
+    <tr>
+        <td class="label-primary"> {{$state->state_name}} </td>
 
-<hr>
-<h3>cities</h3>
-    @foreach($state->cities as $city)
+            @foreach($state->cities as $city)
 
-        {{$city->city_name}}
-        <br>
+            <td>   {{$city->city_name}} </td>
+
 
 
     @endforeach
 
 
-
+<td>
 {!! Form::open(['route' => ['states.destroy',$state->id], 'method' =>'delete']) !!}
 {!!  Form::submit('Delete') !!}
 {!! Form::close() !!}
 
-{!! link_to_route('states.edit', $title = 'Edit', $parameters = [$state->id], $attributes = []) !!}
+</td>
+        <td>
 
-<br/>
+{!! link_to_route('states.edit', $title = 'Edit', $parameters = [$state->id], $attributes = []) !!}
+        </td>
+        <td>
+
+<a href="/states/{{$state->id}}">Show State Details</a>
+        </td>
+    </tr>
 @endforeach
+
+</table>
 
 {!! link_to_route('states.create', $title = 'Add New state', $parameters = [], $attributes = []) !!}
 
