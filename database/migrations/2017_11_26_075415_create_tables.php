@@ -22,7 +22,11 @@ class CreateTables extends Migration
             $table->integer('population');
             $table->float('area');
             $table->string('main_lang');
+            $table->string('currency');
+            $table->string('prefix');
+            $table->integer('number_length');
             $table->timestamps();
+            $table->unique(['country_name','prefix']);
         });
 
         // states table
@@ -33,6 +37,7 @@ class CreateTables extends Migration
             $table->integer('country_id')->unsigned();
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
+            $table->unique('state_name');
         });
 
         // cities table
@@ -42,6 +47,7 @@ class CreateTables extends Migration
             $table->integer('state_id')->unsigned();
             $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
+            $table->unique('city_name');
         });
 
         /*
@@ -68,6 +74,7 @@ class CreateTables extends Migration
             $table->integer('source_id')->unsigned();
             $table->foreign('source_id')->references('id')->on('countries')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
+            $table->unique('translated_to');
         });
 
         Schema::create('translations_states', function (Blueprint $table){
@@ -77,6 +84,7 @@ class CreateTables extends Migration
             $table->integer('source_id')->unsigned();
             $table->foreign('source_id')->references('id')->on('states')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
+            $table->unique('translated_to');
         });
 
 
@@ -87,7 +95,18 @@ class CreateTables extends Migration
             $table->integer('source_id')->unsigned();
             $table->foreign('source_id')->references('id')->on('cities')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
+            $table->unique('translated_to');
         });
+
+        Schema::create('country_number_perfixs',function (Blueprint $table){
+            $table->increments('id');
+            $table->string('num_perfix');
+            $table->integer('country_id')->unsigned();
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade')->onUpdate('cascade');
+            $table->timestamps();
+            $table->unique('num_perfix');
+        });
+
 
     }
 
@@ -104,5 +123,6 @@ class CreateTables extends Migration
         Schema::dropIfExists('translations_countries');
         Schema::dropIfExists('translations_states');
         Schema::dropIfExists('translations_cities');
+        Schema::dropIfExists('country_number_perfixs');
     }
 }
