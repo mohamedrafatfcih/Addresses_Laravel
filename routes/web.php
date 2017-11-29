@@ -54,3 +54,15 @@ Route::get('/cities/{id}/delete_translation/{translation_id}','citiesController@
 
 Route::get('/cities/{id}/translations','citiesController@showCityTranslations')->name('show_cities_translations');
 Route::get('/get_full_path/{city_id}','citiesController@getCityFullPath')->name('get_city_full_path');
+
+
+
+
+
+
+
+
+
+/******************************************Search**********************************************************/
+
+Route::get('/search/{country_names}');
