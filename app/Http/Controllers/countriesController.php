@@ -193,7 +193,7 @@ class countriesController extends Controller
 
     public function searchCounteries(Request $request){
 
-        echo $request->input('counteries_names');
+        echo $request;
     }
 
 }
