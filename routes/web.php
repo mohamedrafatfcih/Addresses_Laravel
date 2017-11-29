@@ -71,8 +71,6 @@ Route::get('/get_full_path/{city_id}','citiesController@getCityFullPath')->name(
 
 /******************************************Search**********************************************************/
 
-Route::get('/search/','countriesController@searchCounteries')->name('country_search');
-
 
 Route::group(['m iddleware' => 'Authenticated'], function (){
     Route::get('/country_search/','countriesController@searchCounteries')->name('country_search');
@@ -81,3 +79,5 @@ Route::group(['m iddleware' => 'Authenticated'], function (){
 });
 
 
+Route::get('/country_search/','countriesController@searchCounteries')->name('country_search');
+Route::get('/city_search/','citiesController@searchCities')->name('city_search');
