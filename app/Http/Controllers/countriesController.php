@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Country;
+use App\TranslationCountry;
 use Illuminate\Http\Request;
 
 class countriesController extends Controller
@@ -16,7 +17,7 @@ class countriesController extends Controller
     {
         $countryListObj =  Country::all();
         //echo $countryListObj;
-        return view('country.index',['countryListObj'=>$countryListObj]);
+        return $countryListObj; //view('country.index',['countryListObj'=>$countryListObj]);
     }
 
     /**
@@ -64,10 +65,18 @@ class countriesController extends Controller
     {
         if(is_numeric($id) and $id > 0) {
             $countryObj = Country::findOrFail($id);
-            return view('country.country_details',['countryObj' => $countryObj]);
+            return $countryObj ;//view('country.country_details',['countryObj' => $countryObj]);
         }
     }
 
+    public function showCountryTranslations($id)
+    {
+        if(is_numeric($id) and $id > 0) {
+            $countryObj = Country::findOrFail($id);
+            $countryTranslationobj = $countryObj->translations;
+            return $countryTranslationobj ;//view('country.country_details',['countryObj' => $countryObj]);
+        }
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -128,4 +137,54 @@ class countriesController extends Controller
             return redirect(route('counteries.index'))->with('error', 'Invalid country info');
         }
     }
+
+
+    public function addTranslation($id){
+        $countryObj = Country::findOrFail($id);
+        return view('country.add_translation',["countryObj" =>$countryObj]);
+    }
+
+    public function saveTranslation(Request $request,$id){
+        $countryObj = Country::findOrFail($id);
+        $translationObj = new TranslationCountry();
+        $translationObj->source_id = $id;
+        $translationObj->translated_to = $request->input('country_translation');
+        $translationObj->trans_lang = $request->input('translation_language');
+        $translationObj->save();
+
+        return redirect(route('counteries.show',['id'=>$countryObj->id]))->with('success', 'A translation has been added');
+    }
+
+    public function editTranslation($id,$translation_id){
+        $translationObj = TranslationCountry::findOrfail($translation_id);
+        return view('country.edit_translation',['translationObj'=>$translationObj]);
+    }
+
+
+
+
+    public function saveEditeTranslation(Request $request,$id,$translation_id){
+
+        $oldTranslationObj = TranslationCountry::findOrFail($translation_id);
+        $oldTranslationObj->translated_to = $request->input('country_translation');
+        $oldTranslationObj->trans_lang = $request->input('translation_language');
+        $oldTranslationObj->save();
+        return redirect(route('counteries.show',['id'=>$oldTranslationObj->country->id]))->with('success', 'A translation has been updated');
+
+
+    }
+
+
+
+
+
+    public function deleteTranslation(Request $request, $id,$translation_id){
+        $oldTranslationObj = TranslationCountry::findOrFail($translation_id);
+        $oldTranslationObj->delete();
+
+        return redirect(route('counteries.show',['id'=>$oldTranslationObj->country->id]))->with('success', 'A translation has been deleted');
+
+    }
+
 }
+

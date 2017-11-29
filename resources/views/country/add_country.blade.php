@@ -19,16 +19,16 @@
 {!! Form::open(['route' => 'counteries.store']) !!}
 
 {!!  Form::label('country_name', 'Country name :') !!}
-{!! Form::text('country_name') !!}
+{!! Form::text('country_name',null, ['required'=>'true']) !!}
 
 {!!  Form::label('country_main_language', 'Main Language :') !!}
-{!! Form::text('country_main_language') !!}
+{!! Form::text('country_main_language',null, ['required'=>'true']) !!}
 
 {!!  Form::label('country_population', 'Country population :') !!}
-{!! Form::text('country_population') !!}
+{!! Form::text('country_population',null, ['required'=>'true']) !!}
 
 {!!  Form::label('country_area', 'Country Area :') !!}
-{!! Form::text('country_area') !!}
+{!! Form::text('country_area',null, ['required'=>'true']) !!}
 
 {!!   Form::submit('Add') !!}
 {!! Form::close() !!}

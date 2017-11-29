@@ -1,5 +1,12 @@
 @extends('base')
-@section('add_state')
+@if(count($errors) > 0)
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
+    </div>
 
     <br><br><br>
     @if(count($errors) > 0)
@@ -11,7 +18,8 @@
             </ul>
         </div>
 
-    @endif
+
+@section('content')
 <form action="{{route('states.store')}}" method="post">
     {{csrf_field()}}
     <div class="form-group{{$errors->has('state_name') ? ' has-error' : ''}}">

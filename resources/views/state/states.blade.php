@@ -1,5 +1,5 @@
 @extends('base')
-@section('states')
+@section('content')
 
 <h1> All Sates</h1>
 <table class="table-bordered text-center hover">

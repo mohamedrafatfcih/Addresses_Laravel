@@ -12,6 +12,6 @@ class Country extends Model
     }
 
     public function translations(){
-        return $this->hasMany(TranslationCountry::class);
+        return $this->hasMany(TranslationCountry::class,'source_id','id');
     }
 }

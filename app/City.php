@@ -11,6 +11,6 @@ class City extends Model
     }
 
     public function translations(){
-        return $this->hasMany(TranslationCity::class);
+        return $this->hasMany(TranslationCity::class,'source_id','id');
     }
 }

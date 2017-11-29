@@ -18,7 +18,7 @@ class statesController extends Controller
     {
         $states = State::all();
         $arr = Array('states' => $states);
-        return view('state.states',$arr);
+        return $states; //view('state.states',$arr);
     }
 
     /**
@@ -64,8 +64,17 @@ class statesController extends Controller
     {
         $state = State::find($id);
         $arr = Array('state' => $state);
-        return view('state.show_state', $arr);
+        return $state;// view('state.show_state', $arr);
 
+    }
+
+    public function showStateTranslations($id)
+    {
+        if(is_numeric($id) and $id > 0) {
+            $stateObj = State::findOrFail($id);
+            $stateObjTranslationobj = $stateObj->translation;
+            return $stateObjTranslationobj ;
+        }
     }
 
 
