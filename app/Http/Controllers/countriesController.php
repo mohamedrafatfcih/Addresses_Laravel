@@ -45,6 +45,11 @@ class countriesController extends Controller
                 $countryObj->population = $request->input('country_population');
                 $countryObj->area = $request->input('country_population');
                 $countryObj->main_lang = $request->input('country_main_language');
+                $countryObj->prefix = $request->input('country_prefix');
+                $countryObj->number_length = $request->input('country_digit_num');
+                $countryObj->currency = $request->input('country_currency');
+
+
                 $countryObj->save();
                 return redirect(route('counteries.create'))->with('success', 'New Country has been added');
             }else{
@@ -150,6 +155,7 @@ class countriesController extends Controller
         $translationObj->source_id = $id;
         $translationObj->translated_to = $request->input('country_translation');
         $translationObj->trans_lang = $request->input('translation_language');
+
         $translationObj->save();
 
         return redirect(route('counteries.show',['id'=>$countryObj->id]))->with('success', 'A translation has been added');
@@ -195,19 +201,23 @@ class countriesController extends Controller
         $search_result = array();
         foreach ($request->input('counteries_names') as $country){
             $SearchObj = Country::all()->where('country_name',$country);
-            $countryObj = $SearchObj->values()[0];
-            $countryObj->translations;
-            $stateListObj = $countryObj->states;
-            foreach ($stateListObj as $state){
-                $state->translation;
-                $citiesListobj = $state->cities;
+            if(count($SearchObj ) > 0){
+                $countryObj = $SearchObj->values()[0];
+                $countryObj->translations;
+                $countryObj->localPrefixes;
+                $stateListObj = $countryObj->states;
+                foreach ($stateListObj as $state){
+                    $state->translation;
+                    $citiesListobj = $state->cities;
 
 
-                foreach ($citiesListobj as $city){
-                    $city->translations;
+                    foreach ($citiesListobj as $city){
+                        $city->translations;
+                    }
                 }
+                $search_result[$country] = $countryObj;
             }
-            $search_result[$country] = $countryObj;
+
 
 
         }
