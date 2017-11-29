@@ -30,5 +30,16 @@
 {!!  Form::label('country_area', 'Country Area :') !!}
 {!! Form::text('country_area',null, ['required'=>'true']) !!}
 
+{!!  Form::label('country_prefix', 'Country prefix :') !!}
+{!! Form::text('country_prefix',null, ['required'=>'true']) !!}
+
+{!!  Form::label('country_digit_num', 'Country number length :') !!}
+{!! Form::text('country_digit_num',null, ['required'=>'true']) !!}
+
+{!!  Form::label('country_currency', 'Country currency :') !!}
+{!! Form::text('country_currency',null, ['required'=>'true']) !!}
+
+
+
 {!!   Form::submit('Add') !!}
 {!! Form::close() !!}

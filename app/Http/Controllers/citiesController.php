@@ -174,19 +174,20 @@ class citiesController extends Controller
         $search_result = array();
         foreach ($request->input('cities_names') as $city){
             $searchObj = City::all()->where('city_name',$city);
+            if(count($searchObj) > 0) {
+                foreach ($searchObj as $searchResultObj) {
+                    $searchResultObj->translations;
+                    $cityState = $searchResultObj->state;
+                    $cityState->translation;
+                    $cityCountry = $cityState->country;
+                    $cityCountry->translations;
+                    $cityCountry->localPrefixes;
+                }
 
-            foreach ($searchObj as $searchResultObj){
-                $searchResultObj->translations;
-                $cityState = $searchResultObj->state;
-                $cityState->translation;
-                $cityCountry = $cityState->country;
-                $cityCountry->translations;
+
+                $search_result[$city] = $searchObj;
+
             }
-
-
-            $search_result[$city] = $searchObj;
-
-
         }
 
         return $search_result;
