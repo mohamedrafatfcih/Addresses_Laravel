@@ -65,4 +65,4 @@ Route::get('/get_full_path/{city_id}','citiesController@getCityFullPath')->name(
 
 /******************************************Search**********************************************************/
 
-Route::get('/search/{country_names}');
+Route::get('/search/','countriesController@searchCounteries')->name('country_search');
