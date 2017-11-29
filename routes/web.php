@@ -14,6 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
 Route::resource('counteries','countriesController');
 Route::resource('states','statesController' );
 Route::resource('cities','citiesController' );
@@ -65,5 +71,13 @@ Route::get('/get_full_path/{city_id}','citiesController@getCityFullPath')->name(
 
 /******************************************Search**********************************************************/
 
-Route::get('/country_search/','countriesController@searchCounteries')->name('country_search');
-Route::get('/city_search/','citiesController@searchCities')->name('city_search');
+Route::get('/search/','countriesController@searchCounteries')->name('country_search');
+
+
+Route::group(['m iddleware' => 'Authenticated'], function (){
+    Route::get('/country_search/','countriesController@searchCounteries')->name('country_search');
+    Route::get('/state_search','statesController@search_state');
+
+});
+
+
