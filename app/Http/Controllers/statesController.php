@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 class statesController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -162,6 +164,20 @@ class statesController extends Controller
         $state = State::find($id);
         $state->delete();
         return redirect(route('states.index'));
+    }
+
+    public function search_state(Request $request){
+        $state_names = [];
+        foreach ($request->input('state_name') as $state_name){
+           $state_as_collection  = State::all()->where('state_name',$state_name);
+           $state = $state_as_collection->values()[0];
+           $state->country;
+           $state->translation;
+           $state->cities;
+            $state_names[$state_name] = $state;
+        }
+
+        return $state_names;
     }
 
 }
