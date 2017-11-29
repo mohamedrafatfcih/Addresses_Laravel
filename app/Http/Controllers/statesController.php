@@ -170,11 +170,15 @@ class statesController extends Controller
         $state_names = [];
         foreach ($request->input('state_name') as $state_name){
            $state_as_collection  = State::all()->where('state_name',$state_name);
-           $state = $state_as_collection->values()[0];
-           $state->country;
-           $state->translation;
-           $state->cities;
-            $state_names[$state_name] = $state;
+           if(count($state_as_collection) > 0){
+               $state = $state_as_collection->values()[0];
+               $country = $state->country;
+               $country->localPrefixes;
+               $state->translation;
+               $state->cities;
+               $state_names[$state_name] = $state;
+           }
+
         }
 
         return $state_names;
