@@ -168,4 +168,28 @@ class citiesController extends Controller
 
 
     }
+
+
+    public function searchCities(Request $request){
+        $search_result = array();
+        foreach ($request->input('cities_names') as $city){
+            $searchObj = City::all()->where('city_name',$city);
+
+            foreach ($searchObj as $searchResultObj){
+                $searchResultObj->translations;
+                $cityState = $searchResultObj->state;
+                $cityState->translation;
+                $cityCountry = $cityState->country;
+                $cityCountry->translations;
+            }
+
+
+            $search_result[$city] = $searchObj;
+
+
+        }
+
+        return $search_result;
+
+    }
 }

@@ -192,8 +192,28 @@ class countriesController extends Controller
     /************ search *************/
 
     public function searchCounteries(Request $request){
+        $search_result = array();
+        foreach ($request->input('counteries_names') as $country){
+            $SearchObj = Country::all()->where('country_name',$country);
+            $countryObj = $SearchObj->values()[0];
+            $countryObj->translations;
+            $stateListObj = $countryObj->states;
+            foreach ($stateListObj as $state){
+                $state->translation;
+                $citiesListobj = $state->cities;
 
-        echo $request;
+
+                foreach ($citiesListobj as $city){
+                    $city->translations;
+                }
+            }
+            $search_result[$country] = $countryObj;
+
+
+        }
+
+        return $search_result;
+
     }
 
 }
