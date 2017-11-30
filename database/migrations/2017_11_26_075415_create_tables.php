@@ -18,7 +18,7 @@ class CreateTables extends Migration
         Schema::create('countries', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->string('country_name');
+            $table->string('country_name')->unique();
             $table->integer('population');
             $table->float('area');
             $table->string('main_lang');
@@ -26,28 +26,28 @@ class CreateTables extends Migration
             $table->string('prefix');
             $table->integer('number_length');
             $table->timestamps();
-            $table->unique(['country_name','prefix']);
+          //  $table->unique(['country_name','prefix']);
         });
 
         // states table
 
         Schema::create('states', function (Blueprint $table){
             $table->increments('id');
-            $table->string('state_name');
+            $table->string('state_name')->unique();
             $table->integer('country_id')->unsigned();
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
-            $table->unique('state_name');
+          //  $table->unique('state_name');
         });
 
         // cities table
         Schema::create('cities', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('city_name');
+            $table->string('city_name')->unique();
             $table->integer('state_id')->unsigned();
             $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
-            $table->unique('city_name');
+          //  $table->unique('city_name');
         });
 
         /*
@@ -69,42 +69,42 @@ class CreateTables extends Migration
 
         Schema::create('translations_countries', function (Blueprint $table){
             $table->increments('id');
-            $table->string('translated_to');
+            $table->string('translated_to')->unique();
             $table->string('trans_lang');
             $table->integer('source_id')->unsigned();
             $table->foreign('source_id')->references('id')->on('countries')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
-            $table->unique('translated_to');
+           // $table->unique('translated_to');
         });
 
         Schema::create('translations_states', function (Blueprint $table){
             $table->increments('id');
-            $table->string('translated_to');
+            $table->string('translated_to')->unique();
             $table->string('trans_lang');
             $table->integer('source_id')->unsigned();
             $table->foreign('source_id')->references('id')->on('states')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
-            $table->unique('translated_to');
+       //     $table->unique('translated_to');
         });
 
 
         Schema::create('translations_cities', function (Blueprint $table){
             $table->increments('id');
-            $table->string('translated_to');
+            $table->string('translated_to')->unique();
             $table->string('trans_lang');
             $table->integer('source_id')->unsigned();
             $table->foreign('source_id')->references('id')->on('cities')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
-            $table->unique('translated_to');
+           // $table->unique('translated_to');
         });
 
         Schema::create('country_number_perfixs',function (Blueprint $table){
             $table->increments('id');
-            $table->string('num_perfix');
+            $table->string('num_perfix')->unique();
             $table->integer('country_id')->unsigned();
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
-            $table->unique('num_perfix');
+           // $table->unique('num_perfix');
         });
 
 

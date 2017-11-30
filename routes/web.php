@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+//Passport::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -67,17 +68,16 @@ Route::get('/get_full_path/{city_id}','citiesController@getCityFullPath')->name(
 
 
 
-
-
 /******************************************Search**********************************************************/
 
 
-Route::group(['m iddleware' => 'Authenticated'], function (){
+Route::group(['middleware' => 'auth:api'], function (){
     Route::get('/country_search/','countriesController@searchCounteries')->name('country_search');
     Route::get('/state_search','statesController@search_state');
+    Route::get('/country_search/','countriesController@searchCounteries')->name('country_search');
+    Route::get('/city_search/','citiesController@searchCities')->name('city_search');
 
 });
 
 
-Route::get('/country_search/','countriesController@searchCounteries')->name('country_search');
-Route::get('/city_search/','citiesController@searchCities')->name('city_search');
+
