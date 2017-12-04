@@ -71,13 +71,10 @@ Route::get('/get_full_path/{city_id}','citiesController@getCityFullPath')->name(
 /******************************************Search**********************************************************/
 
 
-Route::group(['middleware' => 'auth:api'], function (){
-    Route::get('/country_search/','countriesController@searchCounteries')->name('country_search');
-    Route::get('/state_search','statesController@search_state');
-    Route::get('/country_search/','countriesController@searchCounteries')->name('country_search');
-    Route::get('/city_search/','citiesController@searchCities')->name('city_search');
 
-});
 
+Route::get('/state_search/','statesController@search_state');
+Route::get('/country_search/','countriesController@searchCounteries')->name('country_search');
+Route::get('/city_search/','citiesController@searchCities')->name('city_search');
 
 

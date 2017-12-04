@@ -169,24 +169,39 @@ class citiesController extends Controller
 
     }
 
+    public function apply_filter($cityObj,$filter){
+
+        $search_filter_dict = new search_filters();
+        if($filter) {
+            return $search_filter_dict->city_search_actions[$filter]($cityObj);
+        }
+    }
 
     public function searchCities(Request $request){
         $search_result = array();
-        foreach ($request->input('cities_names') as $city){
-            $searchObj = City::all()->where('city_name',$city);
-            if(count($searchObj) > 0) {
-                foreach ($searchObj as $searchResultObj) {
-                    $searchResultObj->translations;
-                    $cityState = $searchResultObj->state;
-                    $cityState->translation;
-                    $cityCountry = $cityState->country;
-                    $cityCountry->translations;
-                    $cityCountry->localPrefixes;
+        foreach ($request->input('cities_names') as $city) {
+            $searchObj = City::all()->where('city_name', $city);
+            if (count($request->input('filter')) > 0) {
+
+                if (count($searchObj) > 0) {
+                    foreach ($searchObj as $searchResultObj) {
+                        $filters = $request->input('filter');
+                        foreach ($filters as $filterObj){
+                            $search_result[$filterObj][$searchResultObj->city_name] = $this->apply_filter($searchResultObj,$filterObj);
+
+                        }
+                    }
+
+
                 }
+            }else{
+                foreach ($searchObj as $searchResultObj) {
 
 
-                $search_result[$city] = $searchObj;
+                        $search_result[$searchResultObj->city_name] = $searchResultObj;
 
+
+                }
             }
         }
 
@@ -194,3 +209,17 @@ class citiesController extends Controller
 
     }
 }
+
+
+
+
+
+
+
+
+/*$searchResultObj->translations;
+                    $cityState = $searchResultObj->state;
+                    $cityState->translation;
+                    $cityCountry = $cityState->country;
+                    $cityCountry->translations;
+                    $cityCountry->localPrefixes;*/

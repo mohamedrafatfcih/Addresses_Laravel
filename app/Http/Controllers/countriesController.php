@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Country;
 use App\TranslationCountry;
 use Illuminate\Http\Request;
+use App\Http\Controllers\search_filters;
 
 class countriesController extends Controller
 {
@@ -43,7 +44,7 @@ class countriesController extends Controller
                 $countryObj = new Country();
                 $countryObj->country_name = $request->input('country_name');
                 $countryObj->population = $request->input('country_population');
-                $countryObj->area = $request->input('country_population');
+                $countryObj->area = $request->input('country_area');
                 $countryObj->main_lang = $request->input('country_main_language');
                 $countryObj->prefix = $request->input('country_prefix');
                 $countryObj->number_length = $request->input('country_digit_num');
@@ -197,29 +198,46 @@ class countriesController extends Controller
 
     /************ search *************/
 
+    public function apply_filter($countryObj,$filter){
+
+            $search_filter_dict = new search_filters();
+            if($filter){
+            return $search_filter_dict->country_search_actions[$filter]($countryObj);
+            }
+    }
+
+
+
     public function searchCounteries(Request $request){
         $search_result = array();
+        if(count($request->input('filter')) > 0){
         foreach ($request->input('counteries_names') as $country){
             $SearchObj = Country::all()->where('country_name',$country);
             if(count($SearchObj ) > 0){
                 $countryObj = $SearchObj->values()[0];
-                $countryObj->translations;
-                $countryObj->localPrefixes;
-                $stateListObj = $countryObj->states;
-                foreach ($stateListObj as $state){
-                    $state->translation;
-                    $citiesListobj = $state->cities;
 
+                    $filters = $request->input('filter');
+                    foreach ($filters as $filterObj){
+                        $search_result[$filterObj][$countryObj->country_name] = $this->apply_filter($countryObj,$filterObj);
 
-                    foreach ($citiesListobj as $city){
-                        $city->translations;
                     }
+
+
                 }
-                $search_result[$country] = $countryObj;
+
+
             }
 
 
 
+        }else{
+            foreach ($request->input('counteries_names') as $country) {
+                $SearchObj = Country::all()->where('country_name', $country);
+                if (count($SearchObj) > 0) {
+                    $countryObj = $SearchObj->values()[0];
+                    $search_result[$countryObj->country_name] = $countryObj;
+                }
+            }
         }
 
         return $search_result;
@@ -228,3 +246,41 @@ class countriesController extends Controller
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+                }*/
